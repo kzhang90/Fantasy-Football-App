@@ -79,6 +79,8 @@ app.get("/groups/:id", function(req,res) {
 
 });
 
+app.get("/")
+
 //POST ROUTES
 
 //TEAM ROUTES
