@@ -13,15 +13,19 @@ var userSchema = new mongoose.Schema ({
                         },
                       password: {type: String, required: true},
                       avatar: String,
-                      posts: [{
+                      teams: [{
                         type: mongoose.Schema.Types.ObjectId,
-                        ref: "Post"
+                        ref: "Team"
+                      }],
+                      trades: [{
+                        type: mongoose.Schema.Types.ObjectId,
+                        ref: "Trade"
                       }],
                       comments: [{
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "Comment"
                       }],
-                      group: String,
+                    
                     });
 
 userSchema.pre('save', function(next) {
@@ -48,7 +52,7 @@ userSchema.statics.authenticate = function (formData, callback) {
       username: formData.username
     },
     function (err, user) {
-      console.log(user)
+
       if (user === null){
         callback("Invalid username or password",null);
       }

@@ -84,7 +84,7 @@ app.get("/users/:id", function(req,res) {
 
 // });
 
-//COMMENT ROUTES
+//TRADE ROUTES
 app.get("/trades/new", routeMiddleware.ensureLoggedIn, function(req,res) {
   console.log(req.session.id);
   res.render("trades/new", {user_id:req.session.id});
@@ -100,15 +100,118 @@ app.get("/trades/:id", function(req,res) {
 
 //edit trade
 app.get("/trades/:id/edit", routeMiddleware.ensureCorrectUserForTrade, function(req,res) {
-  db.Trade.populate.
+  // db.Trade.populate("");
+  db.Post.findById(req.params.id, function(err,trade) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("trades/edit", {trade: trade});
+    }
+  });
+});
 
+//update trade
+app.put("/trades/:id", routeMiddleware.ensureCorrectUserForTrade, function(req,res) {
+  var show_page = "/trades/" + req.params.id;
+  db.Trade.findByIdandUpdate(req.params.id, req.body.post, function(err,post) {
+    if (err) {
+      console.log(err);
+      res.render("posts/edit");
+    } else {
+      res.redirect(show_page);
+    }
+  });
+});
+
+//destroy trade
+app.delete("/trades/:id", routeMiddleware.ensureCorrectUserForTrade, function(req,res) {
+  db.Trade.findById(req.params.id, function(err,trade) {
+    if (err) {
+      console.log(err);
+      res.render("trades/show");
+    } else {
+      trade.remove();
+      res.redirect("/trades");
+    }
+  });
 });
 
 
 
 //Comment ROUTES
+//index
+app.get("/trades/:trade_id/comments", function(req,res) {
 
+});
+//new comment
+app.get("/trades/:trade_id/comments/new", function(req,res) {
+
+});
+//create comment
+app.post("/trades/:trade_id/comments", function(req,res) {
+
+});
+
+//show
+app.get("/trades/:trade_id/comments/:id", function(req,res) {
+
+});
+
+//edit comment
+app.get("/comments/:id/edit", routeMiddleware.ensureCorrectUserForComment, function(req,res) {
+  db.Comment.findByIdAndUpdate(req.params.id, req.body.comment, function(err,comment) {
+    if (err) {
+      res.render("comments/edit");
+    } else {
+      console.log(comment);
+      res.redirect("comments/edit", {comment: comment});
+    }
+  });
+});
+
+//update comment
+app.put("/comments/:id", routeMiddleware.ensureCorrectUserForComment, function(req,res) {
+  db.Comment.findByIdAndUpdate(req.params.id, req.body.comment, function(err, comment) {
+    if (err) {
+      res.render("comments/edit");
+    } else {
+      console.log(comment);
+      res.redirect("/trades/" + comment.post + "/comments");
+    }
+  });
+});
+
+//DESTROY      
+app.delete('/comments/:id', routeMiddleware.ensureCorrectUserForComment, function(req,res) {
+  db.Comment.findByIdAndRemove(req.params.id, function(err, comment) {
+    if(err) {
+      console.log(err);
+      res.render('comments/index');
+    }
+    else {
+      res.redirect('/trades/' + comment.post + "/comments");
+    }
+  });
+});
 
 //Team ROUTES
+app.get("/users/:id/team", function(req,res) {
+
+});
+
+//edit team
+app.get("/team/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+  //render a page with the whole team, with option
+  db.Team.findById(req.params.id, function(err,team) {
+    if (err) {
+      console.log(err);
+      res.render("errors/404");
+    } else {
+      res.render("teams/edit", {team: team});
+    }
+  });
+});
+
+//Player ROUTES
 
 app.listen(process.env.PORT || 3000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

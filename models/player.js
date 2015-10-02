@@ -4,18 +4,22 @@ var dateComment = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getF
 
 mongoose.set('debug', true);
 
-var commentSchema = new mongoose.Schema ({
-                        body: {type: String, required: true},
-                        date: {type: String, default: dateComment},
-                        trade: {
+var playerSchema = new mongoose.Schema ({
+                        first: {type: String, required: true},
+                        last: {type: String, required: true},
+                        trades: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "Trade"
                         },
-                        author: {
+                        owners: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "User"
+                        },
+                        teams: {
+                          type: mongoose.Schema.Types.ObjectId,
+                          ref: "Team"
                         }
                       });
 
-var Comment = mongoose.model("Comment", commentSchema);
-module.exports = Comment;
+var Player = mongoose.model("Player", playerSchema);
+module.exports = Player;
