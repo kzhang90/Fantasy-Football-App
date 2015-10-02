@@ -1,1 +1,22 @@
 <% include ../partials/header %>
+
+
+
+
+
+  <div class="column">
+    <h1>Sign up</h1>
+    <form action="/signup" method="POST">
+        <div class="field">
+          <label for="user">Choose a username:</label>
+          <input type="text" name="user[username]" id="user" placeholder="Enter username" autofocus>
+        </div>
+        <div class="field">
+          <label for="pass">Password:</label>
+          <input type="password" name="user[password]" id="pass" placeholder="Enter password" autofocus>
+        </div>
+        <input class="ui submit purple button" type="submit" value="Sign up">
+        <a href="/login">Already have an account? Login in here</a>
+      </div>
+    </form>
+  </div>
