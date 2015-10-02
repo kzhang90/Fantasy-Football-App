@@ -7,6 +7,7 @@ mongoose.set('debug', true);
 var playerSchema = new mongoose.Schema ({
                         first: {type: String, required: true},
                         last: {type: String, required: true},
+                        image: String,
                         trades: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "Trade"
@@ -20,6 +21,11 @@ var playerSchema = new mongoose.Schema ({
                           ref: "Team"
                         }
                       });
+
+playerSchema.pre("remove", function(next) {
+  Team.remove({player: this._id}).exec();
+  next();
+});
 
 var Player = mongoose.model("Player", playerSchema);
 module.exports = Player;

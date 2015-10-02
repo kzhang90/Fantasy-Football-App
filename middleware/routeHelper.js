@@ -26,10 +26,23 @@ var routeHelpers = {
     db.Comment.findById(req.params.id).populate('author').exec(function(err,comment){
 
       if (comment.author !== undefined && comment.author.id !== req.session.id) {
-        res.redirect('/trades/'+ comment.trade.id +'/comments');
+        //check this, 
+        res.redirect('/trades/'+ comment.trade +'/comments');
       }
       else {
        return next();
+      }
+    });
+  },
+
+  ensureCorrectUserForTeam: function(req, res, next) {
+    db.Team.findById(req.params.id).populate("author").exec(function(err,team) {
+      if (team.author !== undefined && team.author.id !== req.session.id) {
+        //still get to see this team
+        //redirect to the trade id
+        res.redirect("/users/" + team.author + "/team/");
+      } else {
+        return next();
       }
     });
   },

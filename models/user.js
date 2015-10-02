@@ -13,7 +13,7 @@ var userSchema = new mongoose.Schema ({
                         },
                       password: {type: String, required: true},
                       avatar: String,
-                      teams: [{
+                      team: [{
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "Team"
                       }],

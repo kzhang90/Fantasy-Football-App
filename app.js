@@ -4,9 +4,10 @@ var express = require('express'),
     morgan = require('morgan'),
     methodOverride = require('method-override'),
     session = require("cookie-session"),
-    db = require('./models');
-    loginMiddleware = require("./middleware/loginHelper");
-    routeMiddleware = require("./middleware/routeHelper");
+    db = require('./models'),
+    loginMiddleware = require("./middleware/loginHelper"),
+    routeMiddleware = require("./middleware/routeHelper"),
+    dotenv = require("dotenv").load();
 
 app.set('view engine', 'ejs');
 app.use(morgan('tiny'));
@@ -16,28 +17,46 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(session({
   maxAge: 3600000,
-  secret: 'supersecretro',
-  name: "double chocochip"
+  secret: 'appsecret',
+  name: "app name"
 }));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
 
 app.use(loginMiddleware);
 
+// db.connect({
+//   host: process.env.DB_HOST,
+//   username: process.env.DB_USER,
+//   password: process.env.DB_PASS
+// });
+
 //ROOT
 
 app.get("/", function(req,res) {
-  //render all the trades
+  res.render("users/index");
 });
 
 app.get("/trades", function(req,res) {
-  redirect("/");
+  db.Trade.find({}).populate("author","username").populate("myplayers").populate("theirplayers").exec(function(err, trades) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (req.session.id === null) {
+        res.render("posts/index", {trades: trades, currentuser: ""});
+      } else {
+        db.User.findById(req.session.id, function(err,user) {
+          res.render("posts/index", {trades: trades, currentuser: user.username});
+        });
+      }
+    }
+  });
 });
 
 app.get("/users/index", routeMiddleware.preventLoginSignup, function(req,res) {
-  //render the login page
+  res.render("users/index");
 });
 
 app.get("/login", routeMiddleware.preventLoginSignup, function(req,res) {
-  //render the login page
+  res.render("users/login");
 });
 
 app.post("/login", function(req,res) {
@@ -45,10 +64,11 @@ app.post("/login", function(req,res) {
     if (!err && user !== null) {
       req.login(user);
       //redirect to the home page
-      res.redirect("");
+      res.redirect("/trades");
     } else {
       console.log(err);
       //render the login page with err passed as err
+      res.render("users/login", {err: err});
     }
   });
 });
@@ -59,7 +79,7 @@ app.get("/signup", routeMiddleware.preventLoginSignup, function(req,res) {
 
 app.post("/signup", function(req,res) {
   db.User.create(req.body.user, function(err,user) {
-
+    res.redirect("users/login");
   });
 });
 
@@ -212,6 +232,12 @@ app.get("/team/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req
   });
 });
 
+app.get("*", function(req,res) {
+  res.render("errors/404");
+});
 //Player ROUTES
+//team and player are both needed to give an accurate trade assessment
+//
+app.get("")
 
 app.listen(process.env.PORT || 3000);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

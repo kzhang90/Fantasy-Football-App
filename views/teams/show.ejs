@@ -1,0 +1,46 @@
+<% include ../partials/header %>
+<!-- <script src='/javascripts/comments.js'></script> -->
+<div>
+  <h1 class="ui dividing header"><%=team.author%>'s Team</h1>
+</div>
+
+<div id="teamShow">
+  <div class="item">
+
+    <div class="middle aligned content">
+
+    <table class="table table-bordered"> 
+      <tr>
+        <td>First</td>
+        <td>Last</td>
+        <td>Image</td>
+        <td>Projected Fantasy Points</td>
+      </tr>
+      <% team.players.forEach(function(player) { %>
+        <tr>
+          <td><%player.first%></td>
+          <td><%player.last%></td>
+          <td><%player.image%></td>
+          <td id="fantasyPoints"></td>
+          <a class="ui center floated purple button" href="/player/<%= player.id %>/edit">Edit</a>
+          <form action="/player/<%= player.id %>?_method=delete" method="POST" style="float:right;">
+          <input class="ui red button" type="submit" value="delete">
+        </form>
+        </tr>  
+      <%})%>
+      </table>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="ui page grid">
+  <a href="/teams/<%= team._id%>/comments" class="ui black basic button">Add Trade</a>
+  <a href="/teams/<%= team._id%>/comments/new" class="ui black basic button">Add a trade</a>
+  <a href="/teams" class="ui basic button">Back</a>
+  <h4 class="ui header"></h4>
+  <div id="comments"></div>
+</div>
+
+edit and delete this team
