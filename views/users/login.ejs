@@ -5,19 +5,23 @@
     <h2>Sign in</h2>
 
     <!-- send information to the server -->
-    <form action="">
-
-      <div class="input-group input-group-lg">
-        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" class="form-control" placeholder="Username or email">
-          </div>
+   <form action="/login" method="POST">
 
         <div class="input-group input-group-lg">
-          <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="text" name="user[username]" id="username" placeholder="Username" autofocus>
         </div>
 
-        <button type="submit" class="float">Enter</button>
-       </form>
+        <div class="input-group input-group-lg">
+          <input type="password" name="user[password]" id="password" placeholder="Password" autofocus>
+        </div>
+        <div class="enter">
+          <button class="btn btn-default"type="submit">Enter</button>
+        </div>
+        <div class="signup">
+          <a href="/signup">Not a member?</href>
+        </div>
+      </form>
     </div>
- </div>
+  </div>
+  
+<% include ../partials/footer %>

@@ -79,7 +79,12 @@ app.get("/signup", routeMiddleware.preventLoginSignup, function(req,res) {
 
 app.post("/signup", function(req,res) {
   db.User.create(req.body.user, function(err,user) {
-    res.redirect("users/login");
+    if (user) {
+      req.login(user);
+      res.redirect("/trades");
+    } else {
+      res.render("errors/404");
+    }
   });
 });
 
