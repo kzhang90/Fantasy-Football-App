@@ -6,15 +6,15 @@ mongoose.set('debug', true);
 
 var commentSchema = new mongoose.Schema ({
                         body: {type: String, required: true},
-                        date: {type: String, default: dateComment},
-                        trade: {
+                        post: {
                           type: mongoose.Schema.Types.ObjectId,
-                          ref: "Trade"
+                          ref: "Post"
                         },
+                        date: {type: String, default: dateComment},
                         author: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "User"
-                        }
+                        },
                       });
 
 var Comment = mongoose.model("Comment", commentSchema);

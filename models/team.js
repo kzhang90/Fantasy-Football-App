@@ -12,6 +12,10 @@ var teamSchema = new mongoose.Schema ({
                         players: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "Player"
+                        },
+                        posts: {
+                          type: mongoose.Schema.Types.ObjectId,
+                          ref: "Post"
                         }
                       });
 
