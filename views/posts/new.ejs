@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+  <div class="ui two column centered grid">
+    <div class="column">
+      <h1>Create a new post!</h1>
+      <form action="/posts" method="POST">
+        <div class="ui form segment">
+          <div class="two fields">
+            <div class="field">
+              <label for="title">Title:</label>
+              <input type="text" id="title" name="post[title]" placeholder="Enter A Title" autofocus="true">
+            </div>
+            <div class="field">
+              <label for="media">Media:</label>
+              <input type="text" name="post[media]" id="media" placeholder="Image URL, Video, etc">
+            </div>
+          </div>
+            <div class="field">
+              <label for="body">Post content:</label>
+              <textarea name="post[body]" id="body"></textarea>
+            </div>
+              <input type="hidden" name="post[author]" id="author" value="<%= author_id %>">
+              <input class="ui submit button" type="submit">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    
+  </div>
+<% include ../partials/footer %>

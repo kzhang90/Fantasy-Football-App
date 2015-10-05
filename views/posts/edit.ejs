@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+
+  <div class="ui two column centered grid">
+    <div class="column">
+      <h1>Edit <%= post.title  %></h1>
+
+
+      <form action="/posts/<%= post.id %>?_method=put" method="POST">
+        <div class="ui form segment">
+          <div class="two fields">
+            <div class="field">
+              <label for="title">Title:</label>
+              <input type="text" id="title" name="post[title]" autofocus="true" value="<%= post.title  %>">
+            </div>
+            <div class="field">
+              <label for="media">Media:</label>
+              <input type="text" name="post[media]" id="media" value="<%= post.media  %>">
+            </div>
+          </div>
+            <div class="field">
+              <label for="body">Post content:</label>
+            <textarea name="post[body]" id="body"><%= post.body %></textarea>
+            </div>
+          <input class="ui submit purple button" type="submit">
+          <a href="/posts" class="ui submit button">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<% include ../partials/header %>
