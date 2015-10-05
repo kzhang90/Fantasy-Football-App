@@ -13,19 +13,18 @@ var userSchema = new mongoose.Schema ({
                         },
                       password: {type: String, required: true},
                       avatar: String,
-                      team: [{
+                      teams: [{
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "Team"
                       }],
-                      trades: [{
+                      posts: [{
                         type: mongoose.Schema.Types.ObjectId,
-                        ref: "Trade"
+                        ref: "Post"
                       }],
                       comments: [{
                         type: mongoose.Schema.Types.ObjectId,
                         ref: "Comment"
                       }],
-                    
                     });
 
 userSchema.pre('save', function(next) {

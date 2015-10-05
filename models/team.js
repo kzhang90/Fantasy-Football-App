@@ -20,7 +20,8 @@ var teamSchema = new mongoose.Schema ({
                       });
 
 teamSchema.pre("remove", function(next) {
-  Player.remove({player: this._id}).exec();
+  Player.remove({team: this._id}).exec();
+  Post.remove({team: this._id}).exec();
   next();
 });
 

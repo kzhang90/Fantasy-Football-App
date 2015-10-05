@@ -14,7 +14,7 @@ var routeHelpers = {
     db.Trade.findById(req.params.id).populate('author').exec(function(err,trade){
       console.log(trade);
       if (trade.author.id != req.session.id) {
-        res.redirect('/trades');
+        res.redirect('/posts');
       }
       else {
        return next();
@@ -27,7 +27,7 @@ var routeHelpers = {
 
       if (comment.author !== undefined && comment.author.id !== req.session.id) {
         //check this, 
-        res.redirect('/trades/'+ comment.trade +'/comments');
+        res.redirect('/posts/'+ comment.trade +'/comments');
       }
       else {
        return next();
@@ -35,6 +35,7 @@ var routeHelpers = {
     });
   },
 
+//check below
   ensureCorrectUserForTeam: function(req, res, next) {
     db.Team.findById(req.params.id).populate("author").exec(function(err,team) {
       if (team.author !== undefined && team.author.id !== req.session.id) {
@@ -49,7 +50,7 @@ var routeHelpers = {
 
   preventLoginSignup: function(req, res, next) {
     if (req.session.id !== null && req.session.id !== undefined) {
-      res.redirect('/trades');
+      res.redirect('/posts');
     }
     else {
      return next();

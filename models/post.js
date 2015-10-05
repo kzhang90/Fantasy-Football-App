@@ -7,7 +7,7 @@ mongoose.set('debug', true);
 var postSchema = new mongoose.Schema ({
                         title: {type: String, required: true},
                         body: {type: String, required: true},
-                        image: String,
+                        media: String,
                         comments: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "Comment"

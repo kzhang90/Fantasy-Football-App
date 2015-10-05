@@ -248,34 +248,70 @@ app.delete('/comments/:id', routeMiddleware.ensureCorrectUserForComment, functio
   });
 });
 
-// //Team ROUTES
 
 
-// //index for showing all teams
-// app.get("/users/:user_id/teams", function(req,res) {
-//   db.
-// });
-
-// //edit team
-// app.get("/team/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
-//   //render a page with the whole team, with option
-//   db.Team.findById(req.params.id, function(err,team) {
-//     if (err) {
-//       console.log(err);
-//       res.render("errors/404");
-//     } else {
-//       res.render("teams/edit", {team: team});
-//     }
-//   });
-// });
+//Team ROUTES
 
 
-// //Player ROUTES
-// //team and player are both needed to give an accurate Post assessment
-// //
-// app.get("/users/:user_id/teams/:id", function(req,res) {
+//index for showing all teams of a user, have to be logged in
+app.get("/users/:user_id/teams", function(req,res) {
+  db.Team.find({user: req.params.user_id}).exec(function(err,teams) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (req.session.id === null) {
+        //if the person is not logged on, render this
+        //can see teams but cannot edit or add teams
+        //need login button
+        res.render("teams/index", {teams: teams, currentuser: ""});
+      } else {
+        db.User.findById(req.session.id, function(err,user) {
+          //if th
+          res.render("teams/index", {teams: teams, currentuser: user.username});
+        });
+      }
+    }
+  });
+});
 
-// });
+//show all of the players of a particular team
+app.get("/teams/:id", function(req,res) {
+  db.Team.findById(req.params.id).populate("players").exec(
+    function(err,team) {
+      res.render("teams/show", {team: team});
+  });
+});
+
+//edit team
+app.get("/teams/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+  //render a page with the whole team, with option
+  db.Team.findById(req.params.id, function(err,team) {
+    if (err) {
+      console.log(err);
+      res.render("errors/404");
+    } else {
+      res.render("teams/edit", {team: team});
+    }
+  });
+});
+
+app.post("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+  db.Team.create(req.body)
+});
+
+app.delete("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+
+});
+
+
+//Player ROUTES
+//team and player are both needed to give an accurate Post assessment
+//
+
+app.get("/teams/:team_id/players", function(req,res) {
+
+});
+
 
 app.get("*", function(req,res) {
   res.render("errors/404");

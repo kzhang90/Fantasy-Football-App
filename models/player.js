@@ -5,24 +5,20 @@ var dateComment = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getF
 mongoose.set('debug', true);
 
 var playerSchema = new mongoose.Schema ({
-                        first: {type: String, required: true},
-                        last: {type: String, required: true},
+                        name: {type: String, required: true},
                         image: String,
-                        trades: {
-                          type: mongoose.Schema.Types.ObjectId,
-                          ref: "Trade"
-                        },
-                        owners: {
+                        users: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "User"
                         },
                         teams: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "Team"
-                        }
+                        },
                       });
 
 playerSchema.pre("remove", function(next) {
+  User.remove({player: this._id}).exec();
   Team.remove({player: this._id}).exec();
   next();
 });
