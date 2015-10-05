@@ -248,31 +248,34 @@ app.delete('/comments/:id', routeMiddleware.ensureCorrectUserForComment, functio
   });
 });
 
-//Team ROUTES
-app.get("/users/:id/teams", function(req,res) {
-  db.
-});
-
-//edit team
-app.get("/team/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
-  //render a page with the whole team, with option
-  db.Team.findById(req.params.id, function(err,team) {
-    if (err) {
-      console.log(err);
-      res.render("errors/404");
-    } else {
-      res.render("teams/edit", {team: team});
-    }
-  });
-});
+// //Team ROUTES
 
 
-//Player ROUTES
-//team and player are both needed to give an accurate Post assessment
-//
-app.get("/users/:user_id/teams/:id", function(req,res) {
+// //index for showing all teams
+// app.get("/users/:user_id/teams", function(req,res) {
+//   db.
+// });
 
-});
+// //edit team
+// app.get("/team/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+//   //render a page with the whole team, with option
+//   db.Team.findById(req.params.id, function(err,team) {
+//     if (err) {
+//       console.log(err);
+//       res.render("errors/404");
+//     } else {
+//       res.render("teams/edit", {team: team});
+//     }
+//   });
+// });
+
+
+// //Player ROUTES
+// //team and player are both needed to give an accurate Post assessment
+// //
+// app.get("/users/:user_id/teams/:id", function(req,res) {
+
+// });
 
 app.get("*", function(req,res) {
   res.render("errors/404");
