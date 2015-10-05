@@ -1,7 +1,24 @@
 <% include ../partials/header %>
-<!-- <script src='/javascripts/comments.js'></script> -->
+<!-- <script src='/javascripts/players.js'></script> -->
 
 <!-- show every player of selected team -->
+<a href="/teams/<%= team.id %>">Back</a>
+<div id="showTeam">
+  <% team.forEach(function(player) { %>
+    <p><%= player.name %></p>
+    <p><%= player.image %></p>
+
+  <div class="ui right">
+  <!-- below is the button to edit player -->
+      <a class="ui purple button" href="/players/<%= player.id %>/edit">Edit</a>
+      <form action="/players/<%= player.id %>?_method=delete" method="POST" style="float:right;">
+        <input type="submit" class="ui red button" value="DELETE">
+      </form>
+  </div>
+
+
+  <% } %>
+</div>
 
 
 <% include ../partials/footer %>
