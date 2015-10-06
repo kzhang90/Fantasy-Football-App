@@ -23,11 +23,11 @@ app.use(session({
 
 app.use(loginMiddleware);
 
-// db.connect({
-//   host: process.env.DB_HOST,
-//   username: process.env.DB_USER,
-//   password: process.env.DB_PASS
-// });
+db.connect({
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS
+});
 
 //ROOT
 
@@ -312,8 +312,13 @@ app.delete("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,
 //
 
 app.get("/teams/:team_id/players", function(req,res) {
+  //shows all of the players of a certain team, render the players index page
+});
+
+app.get("/teams/:team_id/players/:id/edit", function(req,res) {
 
 });
+
 
 
 app.get("*", function(req,res) {
