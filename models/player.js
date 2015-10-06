@@ -7,7 +7,7 @@ mongoose.set('debug', true);
 var playerSchema = new mongoose.Schema ({
                         name: {type: String, required: true},
                         image: String,
-                        users: {
+                        author: {
                           type: mongoose.Schema.Types.ObjectId,
                           ref: "User"
                         },

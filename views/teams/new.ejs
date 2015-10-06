@@ -7,10 +7,10 @@
       <form action="/users/<%= user.id %>/teams" method="POST">
         <div class="ui form segment">
           <div class="field">
-            <label for="team">Team</label>
-            <textarea type="text" name="comment[body]" id="team" placeholder="Write your comment.."></textarea>
+            <label for="team">Team Name</label>
+            <textarea type="text" name="team[name]" id="team" placeholder="Enter Your Team Name"></textarea>
           </div>
-          <input type="hidden" name="comment[author]" id="author" value="<%= author_id %>">
+          <input type="hidden" name="team[author]" id="author" value="<%= author_id %>">
           <input class="ui submit purple button" type="submit">
           <a href="/users/<%= user.id %>/teams" class="ui submit default button" type="submit">Cancel</a>
           </div>

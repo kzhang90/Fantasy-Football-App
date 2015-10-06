@@ -22,10 +22,10 @@
       <div class="item">
 
         <div class="middle aligned content">
-        <!-- how to represent the players on the team -->
+
           <a class="header" href="/teams/<%= team.id %>"><%= team.id %></a>
-          <a class="editTeamName" href="/teams/<%= team.id %>/">
-          <a class=
+          <a class="editTeamName" href="/teams/<%=team.id%>/edit">Edit Team Name and Description</a>
+          <a class="showPlayers" href="/teams/<%=team.id%>/players">Display Players</a>
           <span><em>Created by: <%= team.author.username %></em> - </span>
           <span class="meta date"><%= team.date %></span>
         </div>

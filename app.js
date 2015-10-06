@@ -213,7 +213,7 @@ app.post("/posts/:post_id/comments", function(req,res) {
 
 //edit comment
 app.get("/comments/:id/edit", routeMiddleware.ensureCorrectUserForComment, function(req,res) {
-  db.Comment.findByIdAndUpdate(req.params.id, req.body.comment, function(err,comment) {
+  db.Comment.findById(req.params.id, function(err,comment) {
     if (err) {
       res.render("comments/edit");
     } else {
@@ -281,7 +281,12 @@ app.get("/teams/:id", function(req,res) {
       res.render("teams/show", {team: team});
   });
 });
-
+//make new team
+app.get("users/:id/teams/new", routeMiddleware.ensureLoggedIn, function(req,res) {
+  db.User.findById(req.params.id, function(err,team) {
+    res.render("teams/new", {user:user, author_id: req.session.id});
+  });
+});
 //edit team
 app.get("/teams/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
   //render a page with the whole team, with option
@@ -295,15 +300,29 @@ app.get("/teams/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(re
   });
 });
 
-
-//add a new team 
-app.post("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
-  db.Team.create(req.body)
+//update a team name
+app.put("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+  //puts another team into the teams
+  db.Team.findByIdandUpdate(req.params.id, req.body.team, function(err,team) {
+    if (err) {
+      res.render("teams/edit");
+    } else {
+      console.log(team);
+      res.redirect("/users/" + team.user + "/teams");
+    }
+  });
 });
 
 //delete a whole team
 app.delete("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
-
+  db.Team.findByIdAndRemove(req.params.id, function(err,team) {
+    if (err) {
+      console.log(err);
+      res.render("teams/index");
+    } else {
+      res.redirect("/users" + team.user + "/teams");
+    }
+  });
 });
 
 
@@ -313,10 +332,77 @@ app.delete("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,
 
 app.get("/teams/:team_id/players", function(req,res) {
   //shows all of the players of a certain team, render the players index page
+  db.Player.find({team:req.params.team_id}).populate("author").exec(function(err,players) {
+    res.format({
+          'text/html': function(){
+            res.render("players/index", {players:players});
+          },
+          'application/json': function(){
+            res.send({ players: players });
+          },
+          'default': function() {
+            // log the request and respond with 406
+            res.status(406).send('Not Acceptable');
+          }
+    });
+  });
 });
 
-app.get("/teams/:team_id/players/:id/edit", function(req,res) {
+//new player
+app.get("/teams/:team_id/players/new", routeMiddleware.ensureLoggedIn, function(req,res) {
+  db.Player.findById(req.params.team_id, function(err,player) {
+    res.render("players/new", {player: player, author_id: req.session.id});
+  });
+});
 
+//create player
+app.post("/teams/:team_id/players", function(req,res) {
+  db.Player.create(req.body.player, function(err,players) {
+    if (err) {
+      console.log(err);
+      res.render("players/new");
+    } else {
+      db.Team.findById(req.params.team_id, function(err, team) {
+        team.players.push(players);
+        console.log(players);
+        players.team = team._id;
+        players.save();
+        team.save();
+        res.redirect("/teams/" + req.params.team_id + "/players");
+      });
+    }
+  });
+});
+
+app.get("/players/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+  db.Player.findById(req.params.id, function(err,player) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("players/edit", {player: player});
+    }
+  });
+});
+
+//update player
+app.put("/players/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+ db.Player.findByIdAndUpdate(req.params.id, req.body.player, function(err,player) {
+  if (err) {
+    res.render("players/edit");
+  } else {
+    console.log(player);
+    res.redirect("/teams/" + player.team + "/players");
+  }
+ });
+});
+
+app.delete("/players/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
+  db.Player.findByIdAndRemove(req.params.id, function(err,player) {
+    if (err) {
+      console.log(err);
+      res.render("/teams/" + player.team + "/players");
+    }
+  });
 });
 
 
