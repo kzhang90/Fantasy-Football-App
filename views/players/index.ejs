@@ -1,0 +1,42 @@
+<!-- show all of the players in a given team -->
+
+<!-- show team MOVED to index players -->
+
+<% include ../partials/header %>
+<!-- <script src='/javascripts/players.js'></script> -->
+
+<!-- show every player of selected team -->
+<a href="/teams/<%= team.id %>">Back</a>
+<div id="showTeam">
+  <% team.forEach(function(player) { %>
+    <p><%= player.name %></p>
+    <p><%= player.image %></p>
+
+  <div class="ui right">
+  <!-- below is the button to edit player -->
+      <a class="ui purple button" href="/players/<%= player.id %>/edit">Edit</a>
+      <form action="/players/<%= player.id %>?_method=delete" method="team" style="float:right;">
+        <input type="submit" class="ui red button" value="DELETE">
+      </form>
+  </div>
+
+
+  <% } %>
+</div>
+
+
+<!-- see all players etc -->
+<div class="ui page grid">
+  <h4 class="ui dividing header">Players</h4>
+</div>
+<div class="ui page grid">
+  <a href="/teams/<%= team._id%>/players" class="ui black basic button">See all players</a>
+  <a href="/teams/<%= team._id%>/players/new" class="ui black basic button">Add a new player</a>
+  <!-- provide link to go back to team -->
+  <a href="/teams/<%= team.team._id%>" class="ui black basic button">See Referenced Team</a>
+  <a href="/teams" class="ui basic button">Back</a>
+  <h4 class="ui header"></h4>
+  <div id="players"></div>
+</div>
+
+<% include ../partials/footer %>

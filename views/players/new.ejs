@@ -1,0 +1,27 @@
+<%= include ../partials/header %>
+  <div class="ui two column centered grid">
+    <div class="column">
+      <h1>Create a new player!</h1>
+<!-- maybe integrate api call for player stats here -->
+
+      <form action="/teams/<%= team.id %>/players" method="team">
+        <div class="ui form segment">
+          <div class="field">
+            <label for="players">Player Name:</label>
+            <textarea type="text" name="player[name]" id="players" placeholder="Write your player.."></textarea>
+          </div>
+
+          <input type="hidden" name="player[author]" id="author" value="<%= author_id %>">
+
+          <input class="ui submit purple button" type="submit">
+
+          <a href="/teams/<%= team.id %>/players" class="ui submit default button" type="submit">Cancel</a>
+
+          </div>
+        </div>
+      </form>
+
+
+    </div>
+  </div>
+<%= include ../partials/footer %>

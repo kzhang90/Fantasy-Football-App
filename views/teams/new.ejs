@@ -1,0 +1,21 @@
+<%= include ../partials/header %>
+
+<!-- be able to add player after player -->
+  <div class="ui two column centered grid">
+    <div class="column">
+      <h1>Create a new Team!</h1>
+      <form action="/users/<%= user.id %>/teams" method="POST">
+        <div class="ui form segment">
+          <div class="field">
+            <label for="team">Team</label>
+            <textarea type="text" name="comment[body]" id="team" placeholder="Write your comment.."></textarea>
+          </div>
+          <input type="hidden" name="comment[author]" id="author" value="<%= author_id %>">
+          <input class="ui submit purple button" type="submit">
+          <a href="/users/<%= user.id %>/teams" class="ui submit default button" type="submit">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+<%= include ../partials/footer %>

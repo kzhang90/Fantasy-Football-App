@@ -295,10 +295,13 @@ app.get("/teams/:id/edit", routeMiddleware.ensureCorrectUserForTeam, function(re
   });
 });
 
+
+//add a new team 
 app.post("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
   db.Team.create(req.body)
 });
 
+//delete a whole team
 app.delete("/teams/:id", routeMiddleware.ensureCorrectUserForTeam, function(req,res) {
 
 });
