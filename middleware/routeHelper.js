@@ -10,10 +10,10 @@ var routeHelpers = {
     }
   },
 
-  ensureCorrectUserForTrade: function(req, res, next) {
-    db.Trade.findById(req.params.id).populate('author').exec(function(err,trade){
-      console.log(trade);
-      if (trade.author.id != req.session.id) {
+  ensureCorrectUserForPost: function(req, res, next) {
+    db.Post.findById(req.params.id).populate('author').exec(function(err,post){
+      console.log(post);
+      if (post.author.id !== req.session.id) {
         res.redirect('/posts');
       }
       else {
@@ -26,8 +26,7 @@ var routeHelpers = {
     db.Comment.findById(req.params.id).populate('author').exec(function(err,comment){
 
       if (comment.author !== undefined && comment.author.id !== req.session.id) {
-        //check this, 
-        res.redirect('/posts/'+ comment.trade +'/comments');
+        res.redirect('/posts/'+ comment.post +'/comments');
       }
       else {
        return next();
@@ -35,13 +34,12 @@ var routeHelpers = {
     });
   },
 
-//check below
   ensureCorrectUserForTeam: function(req, res, next) {
     db.Team.findById(req.params.id).populate("author").exec(function(err,team) {
       if (team.author !== undefined && team.author.id !== req.session.id) {
         //still get to see this team
-        //redirect to the trade id
-        res.redirect("/users/" + team.author + "/team/");
+        //if the user is not the owner of the team, they cannot edit 
+        res.redirect("/users/" + team.user + "/teams");
       } else {
         return next();
       }

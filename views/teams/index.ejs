@@ -1,0 +1,35 @@
+<%= include ../partials/header %>
+<h1>My Teams</h1>
+  <div class="ui page grid">
+    <div class="right">
+      <% if(currentuser !== ""){ %>
+        <div class="ui default button">
+          <a href="/teams/new">
+          <i class="plus icon"></i>
+          Add a new team</a>
+        </div>
+        <!-- Need to move this to Navbar -->
+        <div class="ui secondary button">
+          <a href="/logout">logout: <%= currentuser %></a>
+        </div>
+      <% }  %>
+    </div>
+    <h1 class="ui dividing header">Teams</h1>
+  </div>
+  <div id="allTeams" class="ui page">
+    <% teams.forEach(function(team) {  %>
+    <div class="ui items">
+      <div class="item">
+
+        <div class="middle aligned content">
+        <!-- how to represent the players on the team -->
+          <a class="header" href="/teams/<%= team.id %>"><%= team.id %></a>
+          <a class="editTeamName" href="/teams/<%= team.id %>/">
+          <a class=
+          <span><em>Created by: <%= team.author.username %></em> - </span>
+          <span class="meta date"><%= team.date %></span>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
