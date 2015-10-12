@@ -1,1 +1,31 @@
 <% include ../partials/header %>
+
+ <div class="">
+
+
+    <div class="column">
+
+
+      <h1>Edit your comment.</h1>
+
+      <form action="/comments/<%= comment.id %>?_method=put" method="POST">
+
+          <div class="field">
+              <label for="comments">Comment:</label>
+              <input type="text" name="comment[body]" id="comments" value="<%= comment.body %>">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+
+
+
+
+      </form>
+
+    </div>
+
+
+
+
+  </div>
+
+<% include ../partials/footer %>

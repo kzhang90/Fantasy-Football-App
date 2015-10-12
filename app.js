@@ -23,11 +23,11 @@ app.use(session({
 
 app.use(loginMiddleware);
 
-// db.connect({
-//   host: process.env.DB_HOST,
-//   username: process.env.DB_USER,
-//   password: process.env.DB_PASS
-// });
+db.connect({
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS
+});
 
 //ROOT
 

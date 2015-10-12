@@ -1,20 +1,20 @@
 <%= include ../partials/header %>
 
 <!-- make team name, create team but player adding will happen in players model -->
-  <div class="ui two column centered grid">
+  <div class="">
     <div class="column">
       <h1>Create a new Team!</h1>
-      <form action="/users/<%= user.id %>/teams" method="POST">
-        <div class="ui form segment">
+      <form action="/users/<%= user._id %>/teams" method="POST">
+
           <div class="field">
             <label for="team">Team Name</label>
             <textarea type="text" name="team[name]" id="team" placeholder="Enter Your Team Name"></textarea>
           </div>
-          <input type="hidden" name="team[author]" id="author" value="<%= author_id %>">
-          <input class="ui submit purple button" type="submit">
-          <a href="/users/<%= user.id %>/teams" class="ui submit default button" type="submit">Cancel</a>
+          <input type="hidden" name="team[author]" id="author" value="<%= author.id %>">
+          <button type="submit" class="btn btn-default">Submit</button>
+          <a href="/users/<%= user.id %>/teams" class="btn btn-default" type="submit">Cancel</a>
           </div>
-        </div>
+
       </form>
     </div>
   </div>

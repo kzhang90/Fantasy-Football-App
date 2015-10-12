@@ -1,31 +1,31 @@
 <%= include ../partials/header %>
-  <div class="ui page grid">
-    <div class="right">
+  <div class="">
+    <div class="">
       <% if(currentuser !== ""){ %>
-        <div class="ui default button">
+        <div class="">
           <a href="/posts/new">
           <i class="plus icon"></i>
           Add a new post</a>
         </div>
         <!-- Need to move this to Navbar -->
-        <div class="ui secondary button">
+        <div class="">
           <a href="/logout">logout: <%= currentuser %></a>
         </div>
       <% }  %>
     </div>
-    <h1 class="ui dividing header">Posts</h1>
+    <h1 class="">Posts</h1>
   </div>
-  <div id="allPosts" class="ui page">
+  <div id="allPosts" class="">
     <% posts.forEach(function(post) {  %>
-    <div class="ui items">
+    <div class="items">
       <div class="item">
-        <div class="ui tiny image">
+        <div class="itemMedia">
           <img src="<%= post.media  %>">
         </div>
-        <div class="middle aligned content">
+        <div class="postDescrip">
           <a class="header" href="/posts/<%= post.id %>"><%= post.title %></a>
           <span><em>Created by: <%= post.author.username %></em> - </span>
-          <span class="meta date"><%= post.date %></span>
+          <span class="date"><%= post.date %></span>
         </div>
       </div>
     </div>
