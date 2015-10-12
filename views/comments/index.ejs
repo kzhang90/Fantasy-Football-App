@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+  <div class="">
+    <div class="">
+      <% if(currentuser !== ""){ %>
+        <div class="">
+          <a href="/comments/new">
+          <i class="plus icon"></i>
+          Add a new comment</a>
+        </div>
+        <!-- Need to move this to Navbar -->
+        <div class="">
+          <a href="/logout">logout: <%= currentuser %></a>
+        </div>
+      <% }  %>
+    </div>
+    <h1 class="">comments</h1>
+  </div>
+  <div id="allComments" class="">
+    <% comments.forEach(function(comment) {  %>
+    <div class="items">
+      <div class="item">
+        <div class="itemMedia">
+          <img src="<%= comment.media  %>">
+        </div>
+        <div class="commentDescrip">
+          <a class="header" href="/comments/<%= comment.id %>"><%= comment.title %></a>
+          <span><em>Created by: <%= comment.author.username %></em> - </span>
+          <span class="date"><%= comment.date %></span>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+<% include ../partials/footer %>

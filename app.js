@@ -23,11 +23,11 @@ app.use(session({
 
 app.use(loginMiddleware);
 
-db.connect({
-  host: process.env.DB_HOST,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS
-});
+// db.connect({
+//   host: process.env.DB_HOST,
+//   username: process.env.DB_USER,
+//   password: process.env.DB_PASS
+// });
 
 //ROOT
 
@@ -36,7 +36,7 @@ app.get("/", function(req,res) {
 });
 
 app.get("/posts", function(req,res) {
-  db.Post.find({}).populate("author").exec(function(err, posts) {
+  db.Post.find({}).populate("author", "username").exec(function(err, posts) {
     if (err) {
       console.log(err);
     } else {

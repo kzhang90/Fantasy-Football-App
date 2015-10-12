@@ -1,4 +1,4 @@
-<%= include ../partials/header %>
+<% include ../partials/header %>
   <div class="">
     <div class="">
       <% if(currentuser !== ""){ %>
@@ -20,7 +20,7 @@
     <div class="items">
       <div class="item">
         <div class="itemMedia">
-          <img src="<%= post.media  %>">
+<!--           <img src="<%= post.media  %>"> -->
         </div>
         <div class="postDescrip">
           <a class="header" href="/posts/<%= post.id %>"><%= post.title %></a>
@@ -31,3 +31,5 @@
     </div>
     <% }) %>
   </div>
+
+<% include ../partials/footer %>
