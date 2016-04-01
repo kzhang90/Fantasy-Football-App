@@ -1,21 +1,13 @@
 var mongoose = require('mongoose');
-var date = new Date();
-var dateComment = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear().toString().substr(2,2);
+var commentDate = new Date();
 
-mongoose.set('debug', true);
+    mongoose.set('debug', true);
 
 var commentSchema = new mongoose.Schema ({
-                        body: {type: String, required: true},
-                        post: {
-                          type: mongoose.Schema.Types.ObjectId,
-                          ref: "Post"
-                        },
-                        date: {type: String, default: dateComment},
-                        author: {
-                          type: mongoose.Schema.Types.ObjectId,
-                          ref: "User"
-                        },
+                        body: { type: String, required: true },
+                        date: { type: Date, default: commentDate }
                       });
 
-var Comment = mongoose.model("Comment", commentSchema);
+var Comment = mongoose.model('Comment', commentSchema);
+
 module.exports = Comment;

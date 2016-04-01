@@ -1,7 +1,7 @@
 <% include ../partials/header %>
   <div class="">
     <div class="">
-      <% if(currentuser !== ""){ %>
+
         <div class="">
           <a href="/comments/new">
           <i class="plus icon"></i>
@@ -9,9 +9,10 @@
         </div>
         <!-- Need to move this to Navbar -->
         <div class="">
+        <!-- need to pass the currentuser variable into this ejs -->
           <a href="/logout">logout: <%= currentuser %></a>
         </div>
-      <% }  %>
+
     </div>
     <h1 class="">comments</h1>
   </div>

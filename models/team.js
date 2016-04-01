@@ -1,29 +1,23 @@
 var mongoose = require('mongoose');
-var date = new Date();
-var dateComment = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear().toString().substr(2,2);
 
 mongoose.set('debug', true);
 
 var teamSchema = new mongoose.Schema ({
-                        author: {
+                        players: [{
                           type: mongoose.Schema.Types.ObjectId,
-                          ref: "User"
-                        },
-                        players: {
+                          ref: 'Player'
+                        }],
+                        posts: [{
                           type: mongoose.Schema.Types.ObjectId,
-                          ref: "Player"
-                        },
-                        posts: {
-                          type: mongoose.Schema.Types.ObjectId,
-                          ref: "Post"
-                        }
+                          ref: 'Post'
+                        }]
                       });
 
-teamSchema.pre("remove", function(next) {
+teamSchema.pre('remove', function(next) {
   Player.remove({team: this._id}).exec();
   Post.remove({team: this._id}).exec();
   next();
 });
 
-var Team = mongoose.model("Team", teamSchema);
+var Team = mongoose.model('Team', teamSchema);
 module.exports = Team;

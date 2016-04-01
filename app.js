@@ -19,17 +19,9 @@ app.use(session({
   maxAge: 3600000,
   secret: 'appsecret',
   name: "app name"
-}));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+}));                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 
 app.use(loginMiddleware);
-
-// db.connect({
-//   host: process.env.DB_HOST,
-//   username: process.env.DB_USER,
-//   password: process.env.DB_PASS
-// });
-
-//ROOT
 
 app.get("/", function(req,res) {
   res.render("users/index");
@@ -44,7 +36,7 @@ app.get("/posts", function(req,res) {
         res.render("posts/index", {posts: posts, currentuser: ""});
       } else {
         db.User.findById(req.session.id, function(err,user) {
-          res.render("posts/index", {posts: posts, currentuser: user.username});
+          res.render("posts/index", {posts: posts, currentuser: user});
         });
       }
     }
@@ -165,17 +157,16 @@ app.delete("/posts/:id", routeMiddleware.ensureCorrectUserForPost, function(req,
   });
 });
 
-
-
 //Comment ROUTES
 //index
 app.get("/posts/:post_id/comments", function(req,res) {
   db.Comment.find({post:req.params.post_id}).populate("author").exec(function(err,comments){
+
+  
     res.format({
           'text/html': function(){
             res.render("comments/index", {comments:comments});
           },
-
           'application/json': function(){
             res.send({ comments: comments });
           },
@@ -184,6 +175,20 @@ app.get("/posts/:post_id/comments", function(req,res) {
             res.status(406).send('Not Acceptable');
           }
     });
+  });
+
+    db.Post.find({}).populate("author", "username").exec(function(err, posts) {
+    if (err) {
+      console.log(err);
+    } else {
+      if (req.session.id === null) {
+        res.render("posts/index", {posts: posts, currentuser: ""});
+      } else {
+        db.User.findById(req.session.id, function(err,user) {
+          res.render("posts/index", {posts: posts, currentuser: user.username});
+        });
+      }
+    }
   });
 });
 //new comment
