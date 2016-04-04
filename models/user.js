@@ -1,9 +1,7 @@
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
 var mongoose = require('mongoose');
-
-mongoose.set('debug', true);
-
+    mongoose.set('debug', true);
 var userSchema = new mongoose.Schema ({
                       username: {
                         type: String,
@@ -11,7 +9,7 @@ var userSchema = new mongoose.Schema ({
                         lowercase: true,
                         unique: true
                         },
-                      password: {type: String, required: true},
+                      password: { type: String, required: true },
                       avatar: String,
                       players: [{
                         type: mongoose.Schema.Types.ObjectId,
@@ -32,15 +30,16 @@ var userSchema = new mongoose.Schema ({
                     });
 
 userSchema.pre('remove', function(next) {
-  Player.remove({player: this._id}).exec();
-  Team.remove({team: this._id}).exec();
-  Post.remove({post: this._id}).exec();
-  Comment.remove({comment: this._id}).exec();
+  Player.remove({ player: this._id }).exec();
+  Team.remove({ team: this._id }).exec();
+  Post.remove({ post: this._id }).exec();
+  Comment.remove({ comment: this._id }).exec();
   next();
 });
 
 userSchema.pre('save', function(next) {
   var user = this;
+  console.log(user);
   if (!user.isModified('password')) {
     return next();
   }
@@ -58,7 +57,7 @@ userSchema.pre('save', function(next) {
   });
 });
 
-userSchema.statics.authenticate = function (formData, callback) {
+userSchema.statics.authenticate = function(formData, callback) {
   this.findOne({
       username: formData.username
     },

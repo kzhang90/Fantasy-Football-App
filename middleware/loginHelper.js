@@ -1,3 +1,4 @@
+// module for main app to use
 var db = require("../models");
 
 var loginHelpers = function (req, res, next) {

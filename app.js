@@ -3,7 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
     methodOverride = require('method-override'),
-    session = require("cookie-session"),
+    session = require('cookie-session'),
     db = require('./models'),
     loginMiddleware = require("./middleware/loginHelper"),
     routeMiddleware = require("./middleware/routeHelper"),
@@ -27,8 +27,9 @@ app.get("/", function(req,res) {
   res.render("users/index");
 });
 
+// these callbacks can invoke next('route')
 app.get("/posts", function(req,res) {
-  db.Post.find({}).populate("author", "username").exec(function(err, posts) {
+  db.Post.find({}).populate("author" "username").exec(function(err, posts) {
     if (err) {
       console.log(err);
     } else {

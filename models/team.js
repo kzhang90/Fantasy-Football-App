@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 mongoose.set('debug', true);
 
 var teamSchema = new mongoose.Schema ({
+                        created_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
                         players: [{
                           type: mongoose.Schema.Types.ObjectId,
                           ref: 'Player'
